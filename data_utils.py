@@ -37,13 +37,7 @@ def get_masked_edits(dataset, rand_list, problem_case, edit_flag):
             contam_flag = False
             if any((edit[0] == p[0] and edit[1] == p[1] and edit[2] != p[2]) for p in correct_path):
                 # if the edit is the same subject and relation but different answer to a specific hop -> contamination
-
-                if edit_flag and any(
-                        (edit[0] == case_edit[0] and edit[1] == case_edit[1] and edit[2] == case_edit[2]) for case_edit
-                        in d['orig']['edit_triples']):
-                    # if the edit is in the problem_case itself (Update: this will never get invoked.)
-                    print("Invoked here..")
-                    continue
+                
                 contam_flag = True
 
             # add this edit to the edit bank:
