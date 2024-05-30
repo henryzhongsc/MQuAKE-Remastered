@@ -6,6 +6,17 @@ This repository contains utilities for modifying datasets and extracting masked 
 
 The `get_masked_edits` function is designed to identify and extract edits from MQuAKE without contaminating a specified problem case. 
 
+## get_rand_list:
+### Use case:
+This method will take the dataset as a list of instances, and output the sampled caseids of length edit_num.
+```python
+def get_rand_list(dataset, edit_num, seed, dataset_length):
+    # you can use seed = 100
+    random.seed(seed)
+    caseids = [d['case_id'] for d in dataset]
+    return random.sample(caseids, edit_num)
+```
+
 ## get_masked_edits Method Usage
 
 ### Inputs:
@@ -103,14 +114,22 @@ raw_answer_dict = {
 ### How to calculate ACC:
 ```python
 def check_answer(edit_flag, instance, ans):
-    # multi-hop accuracy:
+    # Define answer and answer_alias keys based on edit_flag
     answer = "answer"
     answer_alias = "answer_alias"
     if edit_flag:
         answer = "new_" + answer
         answer_alias = "new_" + answer_alias
     
-    return ans == instance[answer] or ans in instance[answer_alias]
+    # Convert the answer and ans to upper case
+    ans_upper = ans.upper()
+    instance_answer_upper = instance[answer].upper()
+    
+    # Convert each alias to upper case for comparison
+    instance_answer_alias_upper = [alias.upper() for alias in instance[answer_alias]]
+    
+    # Return true if ans matches the answer or any of the aliases
+    return ans_upper == instance_answer_upper or ans_upper in instance_answer_alias_upper
 
 
 # Evaluation:
@@ -170,6 +189,7 @@ def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
         
     return result, correct, total
 ```
+#### Outputs:
 ```output (suppose caseid 10 is wrong and 11 is correct)
 result = {
     'edited': 0,
