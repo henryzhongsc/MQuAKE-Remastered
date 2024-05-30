@@ -93,7 +93,7 @@ raw_answer_dict = {
     11: {
         'edited': False,
         'answers': [
-            'answer4',
+            'Europe',
             'answer5',
             'answer6'
         ]
@@ -180,7 +180,7 @@ correct = {
     'unedited' = set([11])
 },
 total = {
-    'edited' = set(10),
+    'edited' = set([10]),
     'unedited' = set([11])
 }
 ```
