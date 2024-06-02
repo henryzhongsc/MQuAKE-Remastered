@@ -95,7 +95,8 @@ triple_ids[0] = ['Q30', 'P36', 'Q3775140']
 case_index[0] = 2 (case_id of 3)
 ```
 
-## raw answer dict
+## Raw Answer Dict Usage:
+The purpose of using a raw answer dict is to standardize result processing. We could trace back to the llm answers and quickly look up the editing status with this object when conducting evluation.
 An example of raw answer dict where 10 and 11 are caseids:
 ```output
 raw_answer_dict = {
@@ -117,89 +118,25 @@ raw_answer_dict = {
     }
 }
 ```
-### How to calculate ACC:
+### How to use cal_accuracy:
 ```python
-def check_answer(edit_flag, instance, ans):
-    # Define answer and answer_alias keys based on edit_flag
-    answer = "answer"
-    answer_alias = "answer_alias"
-    if edit_flag:
-        answer = "new_" + answer
-        answer_alias = "new_" + answer_alias
-    
-    # Convert the answer and ans to upper case
-    ans_upper = ans.upper()
-    instance_answer_upper = instance[answer].upper()
-    
-    # Convert each alias to upper case for comparison
-    instance_answer_alias_upper = [alias.upper() for alias in instance[answer_alias]]
-    
-    # Return true if ans matches the answer or any of the aliases
-    return ans_upper == instance_answer_upper or ans_upper in instance_answer_alias_upper
+from data_utils import cal_accuracy
+import json
 
+raw_answer_dict_name = 'xxx' # replace with a valid raw_answer_dict_name
+with open(f"raw_answer_dict_folder/{raw_answer_dict_name}.json", 'r') as f:
+  raw_answer_dict = json.load(f)
 
-# Evaluation:
-def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
-    if not use_6334:
-        acc_list = ["unedited_acc", "edited_acc"]
-    else:
-        acc_list = ["unedited_acc", "train_edited_acc", "test_train_overlap_edited_acc", "test_unique_edited_acc"]
-        
-    total = {}
-    correct = {}
-    for acc in acc_list:
-        total[acc] = set()
-        correct[acc] = set()
-    
-    for d in dataset:
-        if d['case_id'] not in raw_answer_dict.keys():
-            continue
-        edited_flag = raw_answer_dict[d['case_id']]['edited']
-        this_is_correct = any(check_answer(edited_flag, d, ans) for ans in raw_answer_dict[d['case_id']]['answers'])
-        caseid = d['case_id']
-        if use_6334:
-            labels_6334 = d['6334_split']
-            if 'train_edited' in labels_6334:
-                total['train_edited_acc'].add(caseid)
-                if this_is_correct:
-                    correct['train_edited_acc'].add(caseid)
+with open('datasets/modified_mquake/MQuAKE-Remastered-CF-3k.json', 'r') as f:
+  dataset = json.load(f)
 
-            if 'test_edited_unique' in labels_6334:
-                total['test_unique_edited_acc'].add(caseid)
-                if this_is_correct:
-                    correct['test_unique_edited_acc'].add(caseid)
-            else:
-                if 'test_edited' in labels_6334:
-                    total['test_train_overlap_edited_acc'].add(caseid)
-                    if this_is_correct:
-                        correct['test_train_overlap_edited_acc'].add(caseid)
-
-            if 'test_unedited' in labels_6334:
-                total['unedited_acc'].add(caseid)
-                if this_is_correct:
-                    correct['unedited_acc'].add(caseid)
-            
-        else:
-            if edited_flag:
-                total['edited_acc'].add(caseid)
-                if this_is_correct:
-                    correct['edited_acc'].add(caseid)
-            else:
-                total['unedited_acc'].add(caseid)
-                if this_is_correct:
-                    correct['unedited_acc'].add(caseid)
-    
-    result = {}
-    for acc in acc_list:
-        result[acc] = len(correct[acc]) / len(total[acc]) if len(total[acc]) != 0 else None
-        
-    return result, correct, total
+result, correct, total = cal_accuracy(dataset, raw_answer_dict)
 ```
 #### Outputs:
 ```output (suppose caseid 10 is wrong and 11 is correct)
 result = {
-    'edited': 0,
-    'unedited': 1
+    'edited': 0.0,
+    'unedited': 1.0
 },
 correct = {
     'edited' = set(),
