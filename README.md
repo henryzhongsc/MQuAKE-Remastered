@@ -6,15 +6,21 @@ This repository contains utilities for modifying datasets and extracting masked 
 
 The `get_masked_edits` function is designed to identify and extract edits from MQuAKE without contaminating a specified problem case. 
 
-## get_rand_list:
+## Get random list:
 ### Use case:
-This method will take the dataset as a list of instances, and output the sampled caseids of length edit_num.
+You can now import and use these lists of several edit nums in the main script. Here’s an example of how to do that:
 ```python
-def get_rand_list(dataset, edit_num, seed, dataset_length):
-    # you can use seed = 100
-    random.seed(seed)
-    caseids = [d['case_id'] for d in dataset]
-    return random.sample(caseids, edit_num)
+from edit_cases import (
+    rand_list_T_1, rand_list_T_100, rand_list_T_500, rand_list_T_all,
+    rand_list_3k_1, rand_list_3k_100, rand_list_3k_1000, rand_list_3k_all,
+    rand_list_9k_1, rand_list_9k_1000, rand_list_9k_3000, rand_list_9k_6000, rand_list_9k_all,
+    rand_list_3151_1, rand_list_3151_100, rand_list_3151_1000, rand_list_3151_all,
+)
+
+# Now you can use the imported lists
+print(rand_list_T_1)
+print(rand_list_T_100)
+# ... and so on for other lists
 ```
 
 ## get_masked_edits Method Usage
