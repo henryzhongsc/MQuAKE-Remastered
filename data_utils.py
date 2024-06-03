@@ -54,9 +54,7 @@ def get_masked_edits(dataset, edited_cases, problem_case, edit_flag):
 
 def process_mquake_remastered_cf_6334(dataset, edit_num = 6334):
     train_edited = []
-    test_unedited = []
     test_edited = []
-    test_edited_overlap = [] # intersection of train_edited and test_edited
 
     train_edited_caseid = set()
     test_edited_caseid = set()
@@ -70,23 +68,18 @@ def process_mquake_remastered_cf_6334(dataset, edit_num = 6334):
         train_edited_caseid.add(d['case_id'])
 
       if 'test_edited_unique' in labels:
-        test_edited_overlap.append(d)
-      else:
-        if 'test_edited' in labels:
-          test_edited.append(d)
-          test_edited_caseid.add(d['case_id'])
-
-      if 'test_unedited' in labels:
-        test_unedited.append(d)
+        test_edited.append(d)  
+      elif 'test_edited' in labels:
+        test_edited.append(d)
+      elif 'test_unedited' in labels:
+        test_edited.append(d)
 
 
     print("edit_num = ", edit_num)
-    print("train_edited: ", len(train_edited))
-    print("test_unedited: ", len(test_unedited))
-    print("test_edited: ", len(test_edited))
-    print("test_edited_overlap: ", len(test_edited_overlap))
+    print("train length: ", len(train_edited))
+    print("test length: ", len(test_edited))
 
-    return train_edited, test_unedited, test_edited, test_edited_overlap
+    return train_edited, test_edited
     # parameter-based methods should train on train_edited then separately evaluate on test_unedited and test_edited with three separate acc reported.
     # test_overlaped is included in test_edited, so no need to separately
 
