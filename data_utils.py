@@ -59,18 +59,29 @@ def process_mquake_remastered_cf_6334(dataset, edit_num = 6334): # edit_num = {1
     train_set_edited_caseid = set()
     test_set_edited_caseid = set()
 
+    facts_triple = set() # entity ids
+    facts_triple_labeled = set() # entity in real words
+    facts_nl = set()
+
     for d in dataset:
-      labels = d['6334_split'][edit_num]
+      labels = d['6334_split'][str(edit_num)]
       if 'train_edited' in labels:
         train_set.append(d)
-        train_set_edited_caseid.append(d['case_id'])
+        train_set_edited_caseid.add(d['case_id'])
+        for index, (fact_tuple, edit) in enumerate(zip(d['orig']['edit_triples'], d["requested_rewrite"])):
+          facts_triple.add(tuple(fact_tuple))
+          
+          facts_triple_labeled.add(tuple([edit["subject"], edit["prompt"], edit["target_new"]["str"]]))
+
+          the_fact = f'{edit["prompt"].format(edit["subject"])} {edit["target_new"]["str"]}'
+          facts_nl.add(the_fact)
 
       if 'test_edited_unique' in labels:
         test_set.append(d)
-        test_set_edited_caseid.append(d['case_id'])
+        test_set_edited_caseid.add(d['case_id'])
       elif 'test_edited' in labels:
         test_set.append(d)
-        test_set_edited_caseid.append(d['case_id'])
+        test_set_edited_caseid.add(d['case_id'])
       elif 'test_unedited' in labels:
         test_set.append(d)
 
@@ -78,8 +89,11 @@ def process_mquake_remastered_cf_6334(dataset, edit_num = 6334): # edit_num = {1
     print(f"edit_num = {edit_num}")
     print(f"train_set size: {len(train_set)}")
     print(f"test_set size: {len(test_set)}")
+    print(f'facts_triple length: {len(facts_triple)}')
+    print(f'facts_nl length: {len(facts_nl)}')
+    print(f'facts_triple_labeled length: {len(facts_triple_labeled)}')
 
-    return train_set, test_set, train_set_edited_caseid, test_set_edited_caseid
+    return train_set, test_set, train_set_edited_caseid, test_set_edited_caseid, facts_triple, facts_nl, facts_triple_labeled
     # test_edited includes cases that are: 1) edited and unique to test_set; 2) unedited and unique to test_set; and 3) edited, exist in both train_set & test_set; such type of cases are a subset of train_edited
     # In practice, one can just grab the whole test_set and conduct normal evaluation, where for each case, you first check if this case is in test_set_edited_caseid, then feed it accordingly. Do make sure you register the edit status of each case accordingly in your raw output.
 
