@@ -52,36 +52,36 @@ def get_masked_edits(dataset, edited_cases, problem_case, edit_flag):
     return nl_facts, triple_labeled, triple_ids, case_index
 
 
-def process_mquake_remastered_cf_6334(dataset, edit_num = 6334):
-    train_edited = []
-    test_edited = []
+def process_mquake_remastered_cf_6334(dataset, edit_num = 6334): # edit_num = {100, 1000, 3000, 6334}
+    train_set = []
+    test_set = []
 
-    train_edited_caseid = set()
-    test_edited_caseid = set()
-
-
+    train_set_edited_caseid = set()
+    test_set_edited_caseid = set()
 
     for d in dataset:
       labels = d['6334_split'][edit_num]
       if 'train_edited' in labels:
-        train_edited.append(d)
-        train_edited_caseid.add(d['case_id'])
+        train_set.append(d)
+        train_set_edited_caseid.append(d['case_id'])
 
       if 'test_edited_unique' in labels:
-        test_edited.append(d)  
+        test_set.append(d)
+        test_set_edited_caseid.append(d['case_id'])
       elif 'test_edited' in labels:
-        test_edited.append(d)
+        test_set.append(d)
+        test_set_edited_caseid.append(d['case_id'])
       elif 'test_unedited' in labels:
-        test_edited.append(d)
+        test_set.append(d)
 
 
-    print("edit_num = ", edit_num)
-    print("train length: ", len(train_edited))
-    print("test length: ", len(test_edited))
+    print(f"edit_num = {edit_num}")
+    print(f"train_set size: {len(train_set)}")
+    print(f"test_set size: {len(test_set)}")
 
-    return train_edited, test_edited
-    # parameter-based methods should train on train_edited then separately evaluate on test_unedited and test_edited with three separate acc reported.
-    # test_overlaped is included in test_edited, so no need to separately
+    return train_set, test_set, train_set_edited_caseid, test_set_edited_caseid
+    # test_edited includes cases that are: 1) edited and unique to test_set; 2) unedited and unique to test_set; and 3) edited, exist in both train_set & test_set; such type of cases are a subset of train_edited
+    # In practice, one can just grab the whole test_set and conduct normal evaluation, where for each case, you first check if this case is in test_set_edited_caseid, then feed it accordingly. Do make sure you register the edit status of each case accordingly in your raw output.
 
 
 def check_answer(edit_flag, instance, ans):
@@ -91,14 +91,14 @@ def check_answer(edit_flag, instance, ans):
     if edit_flag:
         answer = "new_" + answer
         answer_alias = "new_" + answer_alias
-    
+
     # Convert the answer and ans to upper case
     ans_upper = ans.upper()
     instance_answer_upper = instance[answer].upper()
-    
+
     # Convert each alias to upper case for comparison
     instance_answer_alias_upper = [alias.upper() for alias in instance[answer_alias]]
-    
+
     # Return true if ans matches the answer or any of the aliases
     return ans_upper == instance_answer_upper or ans_upper in instance_answer_alias_upper
 
@@ -109,13 +109,13 @@ def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
         acc_list = ["unedited_acc", "edited_acc"]
     else:
         acc_list = ["unedited_acc", "train_edited_acc", "test_train_overlap_edited_acc", "test_unique_edited_acc"]
-        
+
     total = {}
     correct = {}
     for acc in acc_list:
         total[acc] = set()
         correct[acc] = set()
-    
+
     for d in dataset:
         if d['case_id'] not in raw_answer_dict.keys():
             continue
@@ -143,7 +143,7 @@ def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
                 total['unedited_acc'].add(caseid)
                 if this_is_correct:
                     correct['unedited_acc'].add(caseid)
-            
+
         else:
             if edited_flag:
                 total['edited_acc'].add(caseid)
@@ -153,9 +153,9 @@ def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
                 total['unedited_acc'].add(caseid)
                 if this_is_correct:
                     correct['unedited_acc'].add(caseid)
-    
+
     result = {}
     for acc in acc_list:
         result[acc] = len(correct[acc]) / len(total[acc]+ 1e-8)
-        
+
     return result, correct, total
