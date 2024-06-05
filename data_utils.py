@@ -99,6 +99,8 @@ def process_mquake_remastered_cf_6334(dataset, edit_num = 6334): # edit_num = {1
 
 
 def check_answer(edit_flag, instance, ans):
+    if ans is None:
+      return False 
     # Define answer and answer_alias keys based on edit_flag
     answer = "answer"
     answer_alias = "answer_alias"
@@ -117,8 +119,7 @@ def check_answer(edit_flag, instance, ans):
     return ans_upper == instance_answer_upper or ans_upper in instance_answer_alias_upper
 
 
-# Evaluation:
-def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
+def cal_accuracy(dataset, raw_answer_dict, editnum, use_6334=False):
     if not use_6334:
         acc_list = ["unedited_acc", "edited_acc"]
     else:
@@ -131,13 +132,14 @@ def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
         correct[acc] = set()
 
     for d in dataset:
-        if d['case_id'] not in raw_answer_dict.keys():
+        caseid = str(d['case_id'])
+        if caseid not in raw_answer_dict.keys():
             continue
-        edited_flag = raw_answer_dict[d['case_id']]['edited']
-        this_is_correct = any(check_answer(edited_flag, d, ans) for ans in raw_answer_dict[d['case_id']]['answers'])
-        caseid = d['case_id']
+        edited_flag = raw_answer_dict[caseid]['edited']
+        this_is_correct = any(check_answer(edited_flag, d, ans) for ans in raw_answer_dict[caseid]['answers'])
         if use_6334:
-            labels_6334 = d['6334_split']
+            labels_6334 = d['6334_split'][str(editnum)]
+
             if 'train_edited' in labels_6334:
                 total['train_edited_acc'].add(caseid)
                 if this_is_correct:
@@ -170,6 +172,7 @@ def cal_accuracy(dataset, raw_answer_dict, use_6334=False):
 
     result = {}
     for acc in acc_list:
-        result[acc] = len(correct[acc]) / len(total[acc]+ 1e-8)
+        result[acc] = len(correct[acc]) / (len(total[acc]) + 1e-8)
+        print(f"Acc name: {acc}, length: {len(total[acc])}, acc: {result[acc]*100:3f}")
 
     return result, correct, total
