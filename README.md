@@ -27,7 +27,8 @@ pip install -r requirements.txt
 ## Dataset Structure
 MQuAKE-Remastered provides three main datasets for evaluation:
 
-MQuAKE-Remastered-CF: A fixed version of the original MQuAKE-CF, addressing counterfactual edits.
+## MQuAKE-Remastered-CF:
+A fixed version of the original MQuAKE-CF, addressing counterfactual edits.
 MQuAKE-Remastered-CF-3K: A smaller, 3,000-case subset used for computational efficiency.
 MQuAKE-Remastered-T: The temporal version of the dataset, focusing on time-sensitive factual edits.
 We also offer MQuAKE-Remastered-CF-6334, a version designed for parameter-based methods, supporting weight updates for knowledge editing tasks.
