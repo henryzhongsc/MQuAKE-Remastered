@@ -1,8 +1,46 @@
 # MQuAKE-Remastered
 
-This repository contains utilities for modifying datasets and extracting masked edits that do not contaminate a given problem case.
+This repository contains utilities for modifying datasets and extracting masked edits that do not contaminate a given problem case. MQuAKE-Remastered is the enhanced version of the original MQuAKE dataset proposed as a benchmark with respect to multi-hop knowledge editing tasks. We offer various ways in which unproblematic, clean, and efficient editing of data can be effected without contamination from cases that are irrelevant to the new case taking over the interest in data integrity for secure model evaluation.
 
 ## Overview
+
+LLMs often get factual questions wrong or provide outdated answers due to the limitations of learning during training and knowledge cut-off dates. Knowledge editing is a natural candidate for this purpose because it effectively patches such errors without changing large parts of the unrelated model, but knowledge editing is intricate and highly interdependent.
+
+The main benchmark for evaluating multi-hop knowledge editing is the original MQuAKE dataset. However, our analysis of MQuAKE reveals that up to 33% or 76% of its questions and labels may contain errors, leading to unreliable evaluations. MQuAKE-Remastered corrects these issues and thus presents a more accurate and reliable dataset.
+
+## Key Contributions
+Comprehensive audit of the MQuAKE dataset, identifying key error patterns.
+Fixes and remastering of the dataset, preserving its original size and intent while addressing errors.
+Re-benchmarking of all major knowledge editing methods on the fixed dataset.
+Guidance on faithful evaluation to avoid overfitting to dataset-specific properties.
+
+## Installation
+
+Clone this repository and install the necessary dependencies:
+```bash
+from edit_cases import (
+    rand_list_T_1, rand_list_T_100, rand_list_T_500, rand_list_T_all,
+    rand_list_3k_1, rand_list_3k_100, rand_list_3k_1000, rand_list_3k_all,
+    rand_list_9k_1, rand_list_9k_1000, rand_list_9k_3000, rand_list_9k_6000, rand_list_9k_all,
+    rand_list_3151_1, rand_list_3151_100, rand_list_3151_1000, rand_list_3151_all,
+)
+
+# Now you can use the imported lists
+print(rand_list_T_1)
+print(rand_list_T_100)
+# ... and so on for other lists
+```
+
+## Dataset Structure
+MQuAKE-Remastered provides three main datasets for evaluation:
+
+MQuAKE-Remastered-CF: A fixed version of the original MQuAKE-CF, addressing counterfactual edits.
+MQuAKE-Remastered-CF-3K: A smaller, 3,000-case subset used for computational efficiency.
+MQuAKE-Remastered-T: The temporal version of the dataset, focusing on time-sensitive factual edits.
+We also offer MQuAKE-Remastered-CF-6334, a version designed for parameter-based methods, supporting weight updates for knowledge editing tasks.
+
+
+## API Overview
 
 The `get_masked_edits` function is designed to identify and extract edits from MQuAKE without contaminating a specified problem case. 
 
@@ -147,6 +185,8 @@ total = {
     'unedited' = set([11])
 }
 ```
+## Benchmarking
+
 
 ## CC BY 4.0 License:
 MQuAKE-Remastered © 2024 by Shaochen (Henry) Zhong, Yifan Lu, Lize Shao, Bhargav Bhushanam, Xiaocong Du, Louis Feng, Yixin Wan, Yiwei Wang, Daochen Zha, Yucheng Shi, Ninghao Liu, Kaixiong Zhou, Shuai Xu, Vipin Chaudhary, and Xia Hu is licensed under Creative Commons Attribution 4.0 International 
