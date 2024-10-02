@@ -174,4 +174,4 @@ total = {
 
 
 ## CC BY 4.0 License:
-MQuAKE-Remastered © 2024 by Shaochen (Henry) Zhong, Yifan Lu, Lize Shao, Bhargav Bhushanam, Xiaocong Du, Louis Feng, Yixin Wan, Yiwei Wang, Daochen Zha, Yucheng Shi, Ninghao Liu, Kaixiong Zhou, Shuai Xu, Vipin Chaudhary, and Xia Hu is licensed under Creative Commons Attribution 4.0 International 
+MQuAKE-Remastered © 2024 is licensed under Creative Commons Attribution 4.0 International 
