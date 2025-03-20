@@ -2,12 +2,12 @@
 
 ## Introduction
 
-MQuAKE-Remastered is a **corrected and enhanced version** of the original MQuAKE dataset, designed to provide a more reliable benchmark for evaluating multi-hop knowledge editing in large language models (LLMs). The original [MQuAKE](https://github.com/princeton-nlp/MQuAKE) dataset contained **critical errors**, including edit contamination, missing information in question instructions, conflicting edits, and duplicate cases. These issues affected the realiability of evaluation results, making it difficult to assess LLMs' true performance in knowledge editing.
+MQuAKE-Remastered is a **corrected and enhanced version** of the original MQuAKE dataset, designed to provide a more reliable benchmark for evaluating multi-hop knowledge editing in large language models (LLMs). The original [MQuAKE](https://github.com/princeton-nlp/MQuAKE) dataset contained **critical errors**, including edit contamination, missing information in question instructions, conflicting edits, and duplicate cases. These issues affected the reliability of evaluation results, making it difficult to assess LLMs' true performance in knowledge editing.
 
-MQuAKE-Remastered preserves the original dataset's scale and structure while introducing key improvements, ensuring it serves as a robust, contamination-free benchmark for LLMs in counterfactual and temporal knowledge editing tasks.
+MQuAKE-Remastered preserves the original dataset's scale and structure while introducing key improvements, ensuring it serves as a robust, contamination-free benchmark for LLMs in counterfactual and temporal knowledge editing tasks. Check out our datasets at [HuggingFace](https://huggingface.co/datasets/henryzhongsc/MQuAKE-Remastered).
 
 The dataset consists of four splits:
-- **`MQuAKE-Remastered-CF-3k`**: A counterfactual dataset (subset of `CF-9k`) that fixes the original errors while maintaining the same size as `MQuAKE-CF-3k`.
+- **`MQuAKE-Remastered-CF-3k`**: A counterfactual dataset (a subset of `CF-9k`) that fixes the original errors while maintaining the same size as `MQuAKE-CF-3k`.
 - **`MQuAKE-Remastered-CF-9k`**: A full-scale counterfactual dataset that corrects all errors in `MQuAKE-CF`.
 - **`MQuAKE-Remastered-CF-6334`**: A structured subset of `CF-9k` with dedicated **training and testing splits**, suitable for **parameter-based** editing methods.
 - **`MQuAKE-Remastered-T`**: A temporal dataset designed for evaluating knowledge updates based on real-world factual changes.
@@ -26,7 +26,7 @@ To replicate our results, follow these steps:
 
 ### 1. Install Dependencies
 
-In our setting, we used **Python 3.8.6** installed, but other python version should also work. Then, install the required dependencies using:
+In our setting, we used **Python 3.8.6** installed, but other python versions should also work. Then, install the required dependencies using:
 
 ```bash
 pip install -r requirements.txt
