@@ -1,0 +1,8 @@
+{
+    "pipeline_params": {
+        "method": "gwalk",
+        "model_name": "lmsys/vicuna-7b-v1.5",
+        "tokenizer_name": "lmsys/vicuna-7b-v1.5",
+        "chat_template": "vicuna"
+    }
+}

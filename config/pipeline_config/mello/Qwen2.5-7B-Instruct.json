@@ -1,0 +1,8 @@
+{
+    "pipeline_params": {
+        "method": "mello",
+        "model_name": "Qwen/Qwen2.5-7B-Instruct",
+        "tokenizer_name": "Qwen/Qwen2.5-7B-Instruct",
+        "chat_template": "mistral"
+    }
+}

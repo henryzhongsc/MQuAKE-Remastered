@@ -1,0 +1,8 @@
+{
+    "pipeline_params": {
+        "method": "mello",
+        "model_name": "meta-llama/Meta-Llama-3-8B",
+        "tokenizer_name": "meta-llama/Meta-Llama-3-8B",
+        "chat_template": "llama"
+    }
+}

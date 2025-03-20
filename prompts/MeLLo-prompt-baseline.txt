@@ -1,0 +1,44 @@
+Question: What is the capital city of the country of citizenship of Ivanka Trump's spouse?
+Subquestion: Who is Ivanka Trump's spouse?
+Generated answer: Ivanka Trump's spouse is Jared Kushner.
+Intermediate answer: Jared Kushner
+Subquestion: What is the country of citizenship of Jared Kushner?
+Generated answer: The country of citizenship of Jared Kushner is United States.
+Intermediate answer: United States
+Subquestion: What is the capital city of the United States?
+Generated answer: The capital city of the United States is Washington, D.C.
+Intermediate answer: Washington, D.C.
+Final answer: Washington, D.C.
+
+Question: Who is the head of state of the country where Rainn Wilson holds a citizenship?
+Subquestion: What is the country of citizenship of Rainn Wilson?
+Generated answer: Rainn Wilson is a citizen of the United States of America.
+Intermediate answer: United States of America
+Subquestion: What is the name of the current head of state in the United States of America?
+Generated answer: The head of state of the United States is President Joe Biden.
+Intermediate answer: Joe Biden
+Final answer: Joe Biden
+
+Question: Who is the spouse of the head of state in the United States of America?
+Subquestion: Who is the head of state in the United States of America?
+Generated answer: The US president is Joe Biden.
+Intermediate answer: Joe Biden
+Subquestion: Who is the spouse of Joe Biden?
+Generated answer: The spouse of Joe Biden is Jill Biden.
+Intermediate answer: Jill Biden
+Final answer: Jill Biden
+
+Question: On which continent is the country of citizenship of the founder of the manufacturer of iPhone 5 situated?
+Subquestion: Which company is iPhone 5 produced by?
+Generated answer: iPhone 5 is produced by Apple.
+Intermediate answer: Apple
+Subquestion: Who is the founder of Apple?
+Generated answer: Apple was founded by Steve Jobs, Steve Wozniak, and Ronald Wayne.
+Intermediate answer: Steve Jobs, Steve Wozniak, and Ronald Wayne
+Subquestion: What is the country of citizenship of Steve Jobs, Steve Wozniak, and Ronald Wayne?
+Generated answer: Steve Jobs, Steve Wozniak, and Ronald Wayne are citizens of the United States.
+Intermediate answer: United States
+Subquestion: On which continent is the United States situated?
+Generated answer: The United States is situated in North America.
+Intermediate answer: North America
+Final answer: North America

@@ -1,0 +1,14 @@
+{
+    "eval_params": {
+        "edit_num": 1000,
+        "dataset_name": "CF-3k"
+    },
+    "management": {
+        "sub_dir": {
+            "input_config": "input_config/",
+            "raw_results": "raw_results.json",
+            "result_vis": "result_vis.png",
+            "output_config": "output_config.json"
+        }
+    }
+}
