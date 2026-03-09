@@ -1,0 +1,7 @@
+{
+    "method": "mello",
+    "model_name": "meta-llama/Llama-2-7b-hf",
+    "tokenizer_name": "meta-llama/Llama-2-7b-hf",
+    "use_flash_attn": false,
+    "batch_size": 1
+}

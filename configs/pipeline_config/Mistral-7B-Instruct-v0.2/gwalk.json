@@ -1,0 +1,7 @@
+{
+    "method": "gwalk",
+    "model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+    "tokenizer_name": "mistralai/Mistral-7B-Instruct-v0.2",
+    "use_flash_attn": false,
+    "batch_size": 1
+}

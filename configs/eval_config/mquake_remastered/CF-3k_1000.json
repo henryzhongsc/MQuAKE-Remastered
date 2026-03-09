@@ -1,0 +1,7 @@
+{
+    "dataset": "mquake_remastered",
+    "dataset_name": "CF-3k",
+    "edit_num": 1000,
+    "eval_metrics": ["mquake_accuracy"],
+    "prompts_dir": "data/mquake_remastered/prompts/"
+}
